@@ -1,0 +1,44 @@
+function main()
+    CURRENTINDEX = 0
+    KEEPGOING = "yes"
+    SUPPORTTHRESHOLD = 85.0
+    TOTALFLAGGED = 0
+    COUNTER = 1
+    input TOTALDAYS
+    loop while KEEPGOING = "yes"
+        input STUDENTNAME
+        input DAYSATTENDED
+        loop while DAYSATTENDED < 0 OR DAYSATTENDED > TOTALDAYS
+            output "Invalid input! Try again."
+            input DAYSATTENDED
+        end while
+        ATTENDANCEPERCENTAGE = DAYSATTENDED / TOTALDAYS * 100
+        if ATTENDANCEPERCENTAGE < SUPPORTTHRESHOLD then
+            NEEDSSUPPORT = True
+            TOTALFLAGGED = TOTALFLAGGED + 1
+            output "----------------------------------------------------"
+            output STUDENTNAME
+            output DAYSATTENDED + "of" + TOTALDAYS + "Attended"
+            output "SUPPORT NEEDED"
+            output "-----------------------------------------------------"
+            STUDENTNAMES(CURRENTINDEX) = STUDENTNAME
+            ATTENDANCEPERCENTAGES(CURRENTINDEX) = ATTENDANCEPERCENTAGE
+            SUPPORTSTATUSES(CURRENTINDEX) = "SUPPORT NEEDED"
+        else
+            NEEDSSUPPORT = False
+            output "SATISFACTORY"
+            STUDENTNAMES(CURRENTINDEX) = STUDENTNAME
+            ATTENDANCEPERCENTAGES(CURRENTINDEX) = ATTENDANCEPERCENTAGE
+            SUPPORTSTATUSES(CURRENTINDEX) = "Satisfactory"
+        end If
+        CURRENTINDEX = CURRENTINDEX + 1
+        output "DO YOU WANT TO ADD ANOTHER STUDENT?"
+        input KEEPGOING
+    end while
+    PRINTCOUNTER = 0
+    loop while PRINTCOUNTER < CURRENTINDEX
+        output STUDENTNAMES(PRINTCOUNTER) + " - " + ATTENDANCEPERCENTAGES(PRINTCOUNTER) + "% - Status: " + SUPPORTSTATUSES(PRINTCOUNTER)
+        PRINTCOUNTER = PRINTCOUNTER + 1
+    end while
+    output TOTALFLAGGED
+end function

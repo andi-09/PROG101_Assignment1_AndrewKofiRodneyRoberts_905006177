@@ -1,0 +1,72 @@
+<?xml version="1.0"?>
+<flowgorithm fileversion="4.2">
+    <attributes>
+        <attribute name="name" value="programming"/>
+        <attribute name="authors" value="MANJA ROBERT"/>
+        <attribute name="about" value=""/>
+        <attribute name="saved" value="2026-10-15 05:02:37 AM"/>
+        <attribute name="created" value="TUFOSkEgUk9CRVJUO0RFU0tUT1AtSDZWSjNQSjsyMDI2LTEwLTE0OzExOjI1OjQzIFBNOzMyMDM="/>
+        <attribute name="edited" value="TUFOSkEgUk9CRVJUO0RFU0tUT1AtSDZWSjNQSjsyMDI2LTEwLTE1OzA1OjAyOjM3IEFNOzE7MzI5OA=="/>
+    </attributes>
+    <function name="Main" type="None" variable="">
+        <parameters/>
+        <body>
+            <declare name="totalDays, studentCount, counter, totalFlagged, daysAttended" type="Integer" array="False" size=""/>
+            <declare name="attendancePercentages" type="Real" array="True" size="100"/>
+            <declare name="attendancePercentage" type="Real" array="False" size=""/>
+            <declare name="studentName" type="String" array="False" size=""/>
+            <declare name="studentNames" type="String" array="True" size="100"/>
+            <declare name="supportThreshold" type="Real" array="False" size=""/>
+            <declare name="supportStatuses" type="String" array="True" size="100"/>
+            <declare name="printCounter" type="Integer" array="False" size=""/>
+            <declare name="currentIndex" type="Integer" array="False" size=""/>
+            <assign variable="currentIndex" expression="0"/>
+            <declare name="keepGoing" type="String" array="False" size=""/>
+            <assign variable="keepGoing" expression="&quot;yes&quot;"/>
+            <declare name="needsSupport" type="Boolean" array="False" size=""/>
+            <assign variable="supportThreshold" expression="85.0"/>
+            <assign variable="totalFlagged" expression="0"/>
+            <assign variable="counter" expression="1"/>
+            <input variable="totalDays"/>
+            <while expression="keepGoing == &quot;yes&quot;">
+                <input variable="studentName"/>
+                <input variable="daysAttended"/>
+                <while expression="daysAttended &lt; 0 OR daysAttended &gt; totalDays">
+                    <output expression="&quot;Invalid input! Try again.&quot;" newline="True"/>
+                    <input variable="daysAttended"/>
+                </while>
+                <assign variable="attendancePercentage" expression="(daysAttended / totalDays) * 100"/>
+                <if expression="attendancePercentage &lt; supportThreshold">
+                    <then>
+                        <assign variable="needsSupport" expression="TRUE"/>
+                        <assign variable="totalFlagged" expression="totalFlagged + 1"/>
+                        <output expression="&quot;----------------------------------------------------&quot;" newline="True"/>
+                        <output expression="studentName" newline="True"/>
+                        <output expression="daysAttended &amp; &quot;of&quot; &amp; totalDays &amp; &quot;Attended&quot;" newline="True"/>
+                        <output expression="&quot;SUPPORT NEEDED&quot;" newline="True"/>
+                        <output expression="&quot;-----------------------------------------------------&quot;" newline="True"/>
+                        <assign variable="studentNames[currentIndex]" expression="studentName"/>
+                        <assign variable="attendancePercentages[currentIndex]" expression="attendancePercentage"/>
+                        <assign variable="supportStatuses[currentIndex]" expression="&quot;SUPPORT NEEDED&quot;"/>
+                    </then>
+                    <else>
+                        <assign variable="needsSupport" expression="FALSE"/>
+                        <output expression="&quot;SATISFACTORY&quot;" newline="True"/>
+                        <assign variable="studentNames[currentIndex]" expression="studentName"/>
+                        <assign variable="attendancePercentages[currentIndex]" expression="attendancePercentage"/>
+                        <assign variable="supportStatuses[currentIndex]" expression="&quot;Satisfactory&quot;"/>
+                    </else>
+                </if>
+                <assign variable="currentIndex" expression="currentIndex + 1"/>
+                <output expression="&quot;DO YOU WANT TO ADD ANOTHER STUDENT?&quot;" newline="True"/>
+                <input variable="keepGoing"/>
+            </while>
+            <assign variable="printCounter" expression="0"/>
+            <while expression="printCounter &lt; currentIndex">
+                <output expression="studentNames[printCounter] &amp; &quot; - &quot; &amp; attendancePercentages[printCounter] &amp; &quot;% - Status: &quot; &amp; supportStatuses[printCounter]" newline="True"/>
+                <assign variable="printCounter" expression="printCounter + 1"/>
+            </while>
+            <output expression="totalFlagged" newline="True"/>
+        </body>
+    </function>
+</flowgorithm>
